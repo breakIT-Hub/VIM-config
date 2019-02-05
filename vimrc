@@ -33,9 +33,10 @@ call vundle#begin()
     "Plugin 'klen/rope-vim'
     "  Plugin 'python-rope/ropemode'
     "Plugin 'python-rope/ropevim'
-    "Plugin 'davidhalter/jedi-vim'
+    Plugin 'davidhalter/jedi'
+    Plugin 'davidhalter/jedi-vim'
     "Plugin 'ervandew/supertab'
-    Plugin 'SirVer/ultisnips'
+    "Plugin 'SirVer/ultisnips'
     Plugin 'bronson/vim-trailing-whitespace'
     Plugin 'tomasr/molokai'
     Plugin 'tpope/vim-surround'
@@ -44,19 +45,25 @@ call vundle#begin()
     "Plugin 'garbas/vim-snipmate'                " Snippets manager
     "Plugin 'MarcWeber/vim-addon-mw-utils'       " dependencies #1
     "Plugin 'tomtom/tlib_vim'                    " dependencies #2
-    Plugin 'honza/vim-snippets'                 " snippets repo
+    "Plugin 'honza/vim-snippets'                 " snippets repo
     "Plugin 'sheerun/vim-polyglot'
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'mhinz/vim-startify'
     Plugin 'sickill/vim-monokai'
+"    Plugin 'Shougo/deoplete.nvim'
+"    if !has('nvim')
+"        Plugin 'roxma/nvim-yarp'
+"        Plugin 'roxma/vim-hug-neovim-rpc'
+"    endif
+"    Plugin 'Shougo/neosnippet.vim'
+"    Plugin 'Shougo/neosnippet-snippets'
+"    Plugin 'deoplete-plugins/deoplete-jedi'
     " *** Vundle End ***
 call vundle#end()            " required
 filetype plugin indent on
 "###########################################################
 
 "############## Plugin Configuration #######################
-
-" **** davidhalter/jedi-vim
 
 " **** SimpylFold
 filetype plugin indent on    " enables filetype detection
@@ -111,14 +118,26 @@ inoremap <C-e> <C-o>$
 " Make Ctrl-w jump to the end of the current line in the insert mode.
 inoremap <C-w> <C-o>0
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+" Plugin key-mappings Snippets.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<right>"
-let g:UltiSnipsJumpBackwardTrigger = "<left>"
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
 " **************************
 
 "############### Start Python PEP 8 stuff ###################
