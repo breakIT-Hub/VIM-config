@@ -1,8 +1,4 @@
 "############### Vundle configuration ######################
-    " The following are examples of different formats supported.
-    " Keep Plugin commands between vundle#begin/end.
-    " plugin on GitHub repo
-    " Plugin 'tpope/vim-fugitive'
 let $vimhome=fnamemodify(resolve(expand("~/.vimrc")), ':p:h')
 let $vundle=$vimhome."/bundle/Vundle.vim"
 set nocompatible              " be iMproved, required
@@ -29,35 +25,16 @@ call vundle#begin()
     Plugin 'Xuyuanp/nerdtree-git-plugin'
     Plugin 'kien/ctrlp.vim'
     Plugin 'tpope/vim-fugitive'
-    "Docs anschauen
-    "Plugin 'klen/rope-vim'
-    "  Plugin 'python-rope/ropemode'
-    "Plugin 'python-rope/ropevim'
     Plugin 'davidhalter/jedi'
     Plugin 'davidhalter/jedi-vim'
-    "Plugin 'ervandew/supertab'
-    "Plugin 'SirVer/ultisnips'
     Plugin 'bronson/vim-trailing-whitespace'
     Plugin 'tomasr/molokai'
     Plugin 'tpope/vim-surround'
-    Plugin 'fisadev/FixedTaskList.vim'          " Pending tasks list
-    Plugin 'rosenfeld/conque-term'              " Consoles as buffers
-    "Plugin 'garbas/vim-snipmate'                " Snippets manager
-    "Plugin 'MarcWeber/vim-addon-mw-utils'       " dependencies #1
-    "Plugin 'tomtom/tlib_vim'                    " dependencies #2
-    "Plugin 'honza/vim-snippets'                 " snippets repo
-    "Plugin 'sheerun/vim-polyglot'
+    "Plugin 'fisadev/FixedTaskList.vim'          " Pending tasks list
+    "Plugin 'rosenfeld/conque-term'              " Consoles as buffers
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'mhinz/vim-startify'
     Plugin 'sickill/vim-monokai'
-"    Plugin 'Shougo/deoplete.nvim'
-"    if !has('nvim')
-"        Plugin 'roxma/nvim-yarp'
-"        Plugin 'roxma/vim-hug-neovim-rpc'
-"    endif
-"    Plugin 'Shougo/neosnippet.vim'
-"    Plugin 'Shougo/neosnippet-snippets'
-"    Plugin 'deoplete-plugins/deoplete-jedi'
     " *** Vundle End ***
 call vundle#end()            " required
 filetype plugin indent on
@@ -118,20 +95,6 @@ inoremap <C-e> <C-o>$
 " Make Ctrl-w jump to the end of the current line in the insert mode.
 inoremap <C-w> <C-o>0
 
-" Plugin key-mappings Snippets.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
 if has('conceal')
@@ -155,7 +118,7 @@ if (exists('+colorcolumn'))
 endif
 
 " Wrap text after a certain number of characters
-au BufRead,BufNewFile *.py,*.pyw, set textwidth=100
+au BufRead,BufNewFile *.py,*.pyw, set textwidth=80
 
 " Use UNIX (\n) line endings.
 au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
