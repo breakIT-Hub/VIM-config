@@ -1,4 +1,4 @@
- "############### Vundle configuration ######################
+" ############### Vundle configuration ######################
 let $vimhome=fnamemodify(resolve(expand("~/.vimrc")), ':p:h')
 let $vundle=$vimhome."/bundle/Vundle.vim"
 set nocompatible              " be iMproved, required
@@ -9,25 +9,35 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 " *** Vundle Begin (Load Plugins) ***
 call vundle#begin()
-
+    " **** Python Plugins
     Plugin 'VundleVim/Vundle.vim' " Vundle is required
     Plugin 'tmhedberg/SimpylFold'
     Plugin 'vim-scripts/indentpython.vim'
     Plugin 'Valloric/YouCompleteMe'
+    Plugin 'SirVer/ultisnips'
+    Plugin 'honza/vim-snippets'
     Plugin 'vim-syntastic/syntastic'
     Plugin 'nvie/vim-flake8'
-  "  Plugin 'flazz/vim-colorschemes'
+    Plugin 'flazz/vim-colorschemes'
     Plugin 'vim-airline/vim-airline'
     Plugin 'vim-airline/vim-airline-themes'
     Plugin 'scrooloose/nerdtree'
+    Plugin 'ryanoasis/vim-devicons'
+    Plugin 'vwxyutarooo/nerdtree-devicons-syntax'
     Plugin 'Xuyuanp/nerdtree-git-plugin'
     Plugin 'tpope/vim-fugitive'
-    Plugin 'bronson/vim-trailing-whitespace'
- "   Plugin 'tomasr/molokai'
+    Plugin 'ntpeters/vim-better-whitespace'
+    Plugin 'tomasr/molokai'
     Plugin 'tpope/vim-surround'
-    Plugin 'jnurmine/Zenburn'
-    Plugin 'altercation/vim-colors-solarized'
- "   Plugin 'sickill/vim-monokai'
+    Plugin 'python-rope/rope'
+    Plugin 'mbbill/undotree'
+
+    " **** Tex Plugins
+    Plugin 'lervag/vimtex'
+
+    " **** GIT Plugins
+    Plugin 'jreybert/vimagit'
+    Plugin 'airblade/vim-gitgutter' 
 
     " *** Vundle End ***
 call vundle#end()            " required
@@ -38,12 +48,26 @@ filetype plugin indent on
 
 " **** SimpylFold
 filetype plugin indent on    " enables filetype detection
-let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_docstring_preview=1
 
 " **** YouCompleteMe
 let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_key_list_select_completion=['<TAB>', '<Space>', '<Enter>']
+let g:ycm_enable_diagnostic_highlighting=1
+let g:ycm_error_symbol="!!"
+let g:ycm_warning_symbol="w"
+let g:ycm_collect_identifiers_from_comments_and_strings=1
 map <leader>c  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
+" **** Ultisnips
+let g:UltiSnipsExpandTrigger="<space-f>"
+let g:UltiSnipsJumpForwardTrigger="<space-g>"
+let g:UltiSnipsJumpBackwardTrigger="<space-d>"
+let g:UltiSnipsListSnippets="<space-v>"
+" If you want :UltiSnipsEdit to split your window.
+" let g:UltiSnipsEditSplit="vertical"
+" **** undotree
+nnoremap <F2> :UndotreeToggle<cr>
 " **** NERD_tree config
 let NERDTreeChDirMode=2
 let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc$', '\.swp$']
@@ -52,16 +76,12 @@ map <F3> :NERDTreeToggle<CR>
 autocmd VimEnter * if !argc() | NERDTree | endif  " Load NERDTree only if vim is run without arguments
 
 "**** vim-syntastic/syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 
 "**** Konfekt/FastFold
 "let g:fastfold_savehook = 0
 
 
 "use flake8 for syntax checking
-let g:syntastic_python_checkers=['flake8']
 
 "**** Syntastic
 let g:syntastic_always_populate_loc_list = 1
@@ -70,22 +90,29 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_check_on_w = 1
 let python_highlight_all=1
+let g:syntastic_auto_jump = 3
+let g:ycm_show_diagnostics_ui = 0
+let g:syntastic_python_checkers=['flake8', 'bandit', 'pylama', 'pyflakes', 'pylint', 'frosted']
+" **** colorscheme
+syntax enable
 syntax on
-
+colorscheme molokai
+set background=dark
 "***** Zenburn/vim-colors-solarized
-if has('gui_running')
-  set background=dark
-  colorscheme solarized
-else
-  colorscheme zenburn
-endif
-call togglebg#map("<F5>")
-let g:solarized_termcolors=256
+"if has('gui_running')
+"  set background=dark
+"  colorscheme solarized
+"else
+"  colorscheme zenburn
+"endif
+"call togglebg#map("<F5>")
+"let g:solarized_termcolors=256
 " ****Airline settings
-let g:airline_theme='badwolf'
+let g:airline_theme='molokai'
 let g:airline#extensions#tabline#enabled=1
-let g:airline#extensions#tabline#formatter='unique_tail'
+let g:airline#extensions#tabline#formatter='default'
 let g:airline_powerline_fonts=1
+
 
 "###########################################################
 
@@ -97,12 +124,12 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 " Enable folding with the spacebar
-nnoremap <space> za
+nnoremap <C-Space> za
 " move to beginning/end of line
 nnoremap B ^
 nnoremap E $
 "custom keys
-let mapleader="<space>"       " leader is space
+let mapleader="<C>"       " leader is C
 " jk is escape
 inoremap jk <esc>
 " Make Ctrl-e jump to the end of the current line in the insert mode.
@@ -226,11 +253,6 @@ set smartcase                   " ... unless they contain at least one capital l
 
 set wildmenu
 
-" **** color scheme ****
-"syntax enable
-"syntax on
-"colorscheme monokai
-"set background=dark
 
 " Fix Cursor in TMUX
 if exists('$TMUX')
