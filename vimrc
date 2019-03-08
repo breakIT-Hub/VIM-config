@@ -52,11 +52,10 @@ let g:SimpylFold_docstring_preview=1
 
 " **** YouCompleteMe
 let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_key_list_select_completion=['<TAB>', '<Space>', '<Enter>']
+let g:ycm_key_list_select_completion=['<TAB>', '<Space>']
 let g:ycm_enable_diagnostic_highlighting=1
 let g:ycm_error_symbol="!!"
 let g:ycm_warning_symbol="w"
-let g:ycm_collect_identifiers_from_comments_and_strings=1
 map <leader>c  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " **** Ultisnips
@@ -65,23 +64,17 @@ let g:UltiSnipsJumpForwardTrigger="<space-g>"
 let g:UltiSnipsJumpBackwardTrigger="<space-d>"
 let g:UltiSnipsListSnippets="<space-v>"
 " If you want :UltiSnipsEdit to split your window.
-" let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit="vertical"
+
 " **** undotree
 nnoremap <F2> :UndotreeToggle<cr>
+
 " **** NERD_tree config
 let NERDTreeChDirMode=2
 let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc$', '\.swp$']
 let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\~$']
 map <F3> :NERDTreeToggle<CR>
 autocmd VimEnter * if !argc() | NERDTree | endif  " Load NERDTree only if vim is run without arguments
-
-"**** vim-syntastic/syntastic
-
-"**** Konfekt/FastFold
-"let g:fastfold_savehook = 0
-
-
-"use flake8 for syntax checking
 
 "**** Syntastic
 let g:syntastic_always_populate_loc_list = 1
@@ -93,6 +86,7 @@ let python_highlight_all=1
 let g:syntastic_auto_jump = 3
 let g:ycm_show_diagnostics_ui = 0
 let g:syntastic_python_checkers=['flake8', 'bandit', 'pylama', 'pyflakes', 'pylint', 'frosted']
+"let g:syntastic_python_checkers=['flake8']
 " **** colorscheme
 syntax enable
 syntax on
@@ -129,7 +123,7 @@ nnoremap <C-Space> za
 nnoremap B ^
 nnoremap E $
 "custom keys
-let mapleader="<C>"       " leader is C
+map <,> <Leader>    
 " jk is escape
 inoremap jk <esc>
 " Make Ctrl-e jump to the end of the current line in the insert mode.
@@ -178,15 +172,7 @@ set backspace=indent,eol,start
 "Folding based on indentation:
 "autocmd FileType *.py set foldmethod=indent
 
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
-
+au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
 
 "############################################################
 
