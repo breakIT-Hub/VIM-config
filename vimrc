@@ -40,7 +40,6 @@ call vundle#begin()
 call vundle#end()            " required
 filetype plugin indent on
 "###########################################################
-
 "############## Plugin Configuration #######################
 
 " **** YouCompleteMe
@@ -48,20 +47,21 @@ let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_key_list_select_completion=['<Tab>']
 let g:ycm_enable_diagnostic_highlighting=1
 map <C-c>c  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
 " **** Ultisnips
 let g:UltiSnipsExpandTrigger="<C-x>"
 let g:UltiSnipsJumpForwardTrigger="<C-c>"
 let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 let g:UltiSnipsListSnippets="<C-v>"
 let g:UltiSnipsUsePythonVersion = 3
+
 " If you want :UltiSnipsEdit to split your window.
 "let g:UltiSnipsEditSplit="vertical"
 
 " **** Ale
 let g:ale_open_list = 1
-let g:ale_completion_enabled = 1
+"let g:ale_completion_enabled = 1
 let g:ale_fix_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save = 1
 let g:ale_linters_explicit = 1
 let g:ale_open_list = 1
@@ -74,7 +74,7 @@ let b:ale_linters = { 'python': ['pyflakes', 'bandit', 'prospector', 'pycodestyl
 let b:ale_fixers = { 'python' : [ 'remove_trailing_lines', 'trim_whitespace', 'add_blank_lines_for_python_control_statements', 'isort', 'autopep8', 'black', 'yapf' ]}
 
 " **** vim-auto-save
-let g:auto_save = 1  " enable AutoSave on Vim startup
+"let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 " let g:auto_save_postsave_hook = 'TagsGenerate'  " this will run :TagsGenerate after each save
 
@@ -140,9 +140,9 @@ set backspace=indent,eol,start
 "tab sball
 set switchbuf=useopen
 set laststatus=2
-nmap <F9> :bprev<CR>
-nmap <F10> :bnext<CR>
-nmap <silent> <leader>q :SyntasticCheck # <CR> :bp <BAR> bd #<CR>
+nmap <F7> :bprev<CR>
+nmap <F8> :bnext<CR>
+
 "******************************
 
 " encode in utf-8
@@ -175,7 +175,16 @@ set hlsearch                    " highlight matches
 set incsearch                   " incremental searching
 set ignorecase                  " searches are case insensitive...
 set wildmenu
+set noswapfile
+set ruler
+set hidden
+set smartindent
+set wrap
 
+
+
+" run python from vim
+autocmd FileType python nnoremap <buffer> <F5> :exec '!clear; python3' shellescape(@%, 1)<cr>
 
 " Fix Cursor in TMUX
 if exists('$TMUX')
